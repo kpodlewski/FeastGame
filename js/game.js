@@ -108,8 +108,8 @@ function Game(board, furry, coin, score){
             newScore.innerText = this.score;
             this.coin = new Coin();
             this.showCoin();
-            var audio = new Audio('./sounds/pig4.mp3');
-            audio.play();
+            var pig = new Pig('./sounds/pig4.mp3');
+            pig.play();
            
         }
     };

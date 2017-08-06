@@ -14,6 +14,8 @@ function playMyGame() {
     game.showFurry();
     game.showCoin();
     game.startGame();
+    var audio = new Audio('./sounds/hakuna.mp3');
+            audio.play();
     
     document.addEventListener('keydown', function(event){
         game.turnFurry(event);

@@ -9,6 +9,7 @@ function Game(board, furry, coin, score){
     this.furry = new Furry();
     this.coin = new Coin();
     this.score = 0;
+    this.play = true;
     
     this.index = function(x,y){
         return x + (y * 10);
@@ -119,6 +120,7 @@ function Game(board, furry, coin, score){
             clearInterval(this.idSetInterval);
             self.hideVisibleFurry();
             self.hideVisibleCoin();
+            this.play = false;
             var over = document.querySelector('#over');
             var pumba = document.querySelector('.end');
             over.classList.remove('invisible');
@@ -127,7 +129,18 @@ function Game(board, furry, coin, score){
             over.style.fontSize = '45px';
             over.innerText = 'You have to do better! You caught only '+self.score+ ' bugs!';
             over.style.padding = '20%';
+            document.removeEventListener('keydown' , self.onKeyDown);
         } 
+    }
+    this.restart = function() {
+        document.querySelector('.over')style.display='none';
+        self.play = true;
+        self.score = 0;
+        self.furry.x = 0;
+        self.furry.y = 0;
+        self.coin.x = Math.floor(Math.random()*10);
+        self.coin.y = Math.floor(Math.random()*10);
+        self.furry.direction = "right";
     }
 
 };

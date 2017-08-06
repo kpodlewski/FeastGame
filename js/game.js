@@ -29,9 +29,6 @@ function Game(board, furry, coin, score){
             self.moveFurry()
         }, 250);
     };
-    this.onKeyDown = function(event){
-        self.turnFurry(event);
-  }
 
     this.speedBoost = function(){
         

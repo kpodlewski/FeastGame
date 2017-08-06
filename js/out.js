@@ -76,9 +76,7 @@
 var Game = __webpack_require__(5)
 
 var button = document.querySelector('.start');
-var start = button.addEventListener('click', playMyGame);
-
-window.addEventListener('keydown', playMyGame)
+button.addEventListener('click', playMyGame) || button.addEventListener('keydown', playMyGame)
 
 function playMyGame() {
     var starter = document.getElementById('start');
@@ -93,7 +91,6 @@ function playMyGame() {
         game.turnFurry(event);
 
     });
-    document.removeEventListener('keydown' , self.onKeyDown);
 }
 
 /***/ }),
@@ -629,9 +626,6 @@ function Game(board, furry, coin, score){
             self.moveFurry()
         }, 250);
     };
-    this.onKeyDown = function(event){
-        self.turnFurry(event);
-  }
 
     this.speedBoost = function(){
         

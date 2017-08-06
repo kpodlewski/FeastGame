@@ -4,7 +4,7 @@
 var Game = require('./game.js')
 
 var button = document.querySelector('.start');
-button.addEventListener('click', playMyGame) || button.addEventListener('keydown', playMyGame)
+button.addEventListener('click' || 'keydown', playMyGame);
 
 function playMyGame() {
     var starter = document.getElementById('start');

@@ -76,7 +76,7 @@
 var Game = __webpack_require__(5)
 
 var button = document.querySelector('.start');
-button.addEventListener('click', playMyGame) || button.addEventListener('keydown', playMyGame)
+button.addEventListener('click' || 'keydown', playMyGame);
 
 function playMyGame() {
     var starter = document.getElementById('start');
@@ -718,6 +718,7 @@ function Game(board, furry, coin, score){
             self.hideVisibleCoin();
             var over = document.querySelector('#over');
             var pumba = document.querySelector('.end');
+            over.classList.remove('invisible');
             pumba.classList.remove('invisible');
             over.style.fontFamily = "'Press Start 2P', cursive";
             over.style.fontSize = '45px';

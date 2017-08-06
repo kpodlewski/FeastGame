@@ -135,13 +135,13 @@ button.start{
 button.playAgain{
     position: absolute;
     font-family: 'Press Start 2P', cursive;
-    z-index: 3;
+    z-index: 99;
     font-size: 45px;
     height: 60px;
     text-align: center;
-    margin-top: -15vh;
+/*    margin-top: -15vh;
     margin-left: 38vw;
     border-radius: 15px;
     padding-left: 9px;
-    padding-top: 6px;
+    padding-top: 6px;*/
 }

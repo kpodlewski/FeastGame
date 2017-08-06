@@ -91,7 +91,9 @@ function playMyGame() {
     
     document.addEventListener('keydown', function(event){
         game.turnFurry(event);
+
     });
+    document.removeEventListener('keydown' , self.onKeyDown);
 }
 
 /***/ }),

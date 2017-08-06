@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -73,10 +73,14 @@
 //console.log('hello')
 //konstruktory furry i coin
 
-var Game = __webpack_require__(4)
+var Game = __webpack_require__(5)
 
 var button = document.querySelector('.start');
-var start = button.addEventListener('click', function(){
+var start = button.addEventListener('click', playMyGame);
+
+window.addEventListener('keydown', playMyGame)
+
+function playMyGame() {
     var starter = document.getElementById('start');
     starter.classList.add('invisible');
     
@@ -88,7 +92,7 @@ var start = button.addEventListener('click', function(){
     document.addEventListener('keydown', function(event){
         game.turnFurry(event);
     });
-});
+}
 
 /***/ }),
 /* 1 */
@@ -559,6 +563,14 @@ var start = button.addEventListener('click', function(){
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(1);
+module.exports = __webpack_require__(0);
+
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports) {
 
 function Coin(x, y){
@@ -569,7 +581,7 @@ function Coin(x, y){
 module.exports = Coin;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports) {
 
 function Furry(x, y, direction){
@@ -581,11 +593,11 @@ function Furry(x, y, direction){
 module.exports = Furry;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Furry = __webpack_require__(3);
-var Coin = __webpack_require__(2);
+var Furry = __webpack_require__(4);
+var Coin = __webpack_require__(3);
 
 
 function Game(board, furry, coin, score){
@@ -707,7 +719,6 @@ function Game(board, furry, coin, score){
             self.hideVisibleCoin();
             var over = document.querySelector('#over');
             var pumba = document.querySelector('.end');
-            over.classList.remove('invisible');
             pumba.classList.remove('invisible');
             over.style.fontFamily = "'Press Start 2P', cursive";
             over.style.fontSize = '45px';
@@ -719,14 +730,6 @@ function Game(board, furry, coin, score){
 };
 
 module.exports = Game;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(1);
-module.exports = __webpack_require__(0);
-
 
 /***/ })
 /******/ ]);

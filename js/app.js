@@ -4,7 +4,11 @@
 var Game = require('./game.js')
 
 var button = document.querySelector('.start');
-var start = button.addEventListener('click', function(){
+var start = button.addEventListener('click', playMyGame);
+
+window.addEventListener('keydown', playMyGame)
+
+function playMyGame() {
     var starter = document.getElementById('start');
     starter.classList.add('invisible');
     
@@ -16,4 +20,4 @@ var start = button.addEventListener('click', function(){
     document.addEventListener('keydown', function(event){
         game.turnFurry(event);
     });
-});
+}

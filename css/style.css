@@ -7,7 +7,7 @@ body {
     padding: 0;
     height: 97vh;
     widows: 100vw;
-    background-image: url(../images/background.png);
+    background-image: url(../images/background.jpg);
 }
 
 section#score {
@@ -46,12 +46,12 @@ section#score div {
 
 
 
-.furry {
+.pumba {
   background-image: url('../images/pumbaicon.png');
   background-repeat: no-repeat;
   background-size: cover;
 }
-.coin {
+.bug {
   background-image: url('../images/Ladybug-icon.png');
   background-repeat: no-repeat;
   background-position: center;
@@ -132,14 +132,14 @@ button.start{
     top: 5%;
     left:45%;
 }
-button.playAgain{
+/*button.playAgain{
     position: absolute;
     font-family: 'Press Start 2P', cursive;
     z-index: 99;
     font-size: 45px;
     height: 60px;
     text-align: center;
-/*    margin-top: -15vh;
+    margin-top: -15vh;
     margin-left: 38vw;
     border-radius: 15px;
     padding-left: 9px;

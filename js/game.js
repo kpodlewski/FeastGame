@@ -1,139 +1,198 @@
-var Furry = require('./furry.js');
-var Coin = require('./coin.js');
+let Pig = require('./pig.js');
+let Bug = require('./bug.js');
 
 
-function Game(board, furry, coin, score){
+function Game(board, pig, bug, score){
+    // this.setInitialValues();
+    const speedThreshold = 3;
+    const initialSpeed = 250;
+    const initialDirection = 'right';
+    const boardSize = 10;
     
-    var self = this;
+    let lastBugPosition = {
+        x: 0,
+        y: 0,
+    }
+    
+    const self = this;
     this.board = document.querySelectorAll('#board > div');
-    this.furry = new Furry();
-    this.coin = new Coin();
+    this.bug = new Bug();
+    this.pig = new Pig();
     this.score = 0;
-    
+        
     this.index = function(x,y){
-        return x + (y * 10);
-    }; //obliczanie pozycji na planszy
+        return x + (y*boardSize);
+    };
     
-    this.showFurry = function(){
-        if(this.board[ this.index(this.furry.x, this.furry.y) ]!== undefined){
-            this.board[ this.index(this.furry.x, this.furry.y) ].classList.add('furry');
+    this.showPig = function(){
+        if(this.board[this.index(this.pig.x, this.pig.y)] !== undefined){
+            this.board[this.index(this.pig.x, this.pig.y)].classList.add('pumba');
         };
     };
     
-    this.showCoin = function(){
-        this.board[ this.index(this.coin.x, this.coin.y) ].classList.add('coin');
+    this.showBug = function(){
+        this.board[this.index(this.bug.x, this.bug.y)].classList.add('bug');
     };
     
     this.startGame = function(){
-        this.idSetInterval = setInterval(function(){
-            self.moveFurry()
-        }, 250);
+        self.pig.direction = initialDirection;
+        this.idSetInterval = setInterval(function() {
+            self.movePig();
+        },initialSpeed);
     };
-
+    
     this.speedBoost = function(){
-        
-        if(self.score === 3){
+        if(this.score % speedThreshold === 0){
             clearInterval(self.idSetInterval);
             this.idSetInterval = setInterval(function(){
-                self.moveFurry()
-            }, 200);
-        } else if(self.score === 6){
-            clearInterval(self.idSetInterval);
-            this.idSetInterval = setInterval(function(){
-                self.moveFurry()
-            }, 150);
-        } else if(self.score === 9){
-            clearInterval(self.idSetInterval);
-            this.idSetInterval = setInterval(function(){
-                self.moveFurry()
-            }, 100);
-        } else if(self.score === 12){
-            clearInterval(self.idSetInterval);
-            this.idSetInterval = setInterval(function(){
-                self.moveFurry()
-            }, 50);
-         }
-    };
-    
-    this.moveFurry = function(){
-        this.hideVisibleFurry();
-        if(this.furry.direction === 'right'){
-            this.furry.x = this.furry.x + 1;;
-        } else if(this.furry.direction === 'left'){
-            this.furry.x = this.furry.x - 1;
-        } else if(this.furry.direction === 'up'){
-            this.furry.y = this.furry.y - 1;
-        } else if(this.furry.direction === 'down'){
-            this.furry.y = this.furry.y + 1;
-        };
-        self.showFurry();
-        self.checkCoinCollision();
-        self.gameOver();
-        self.speedBoost();
-    };
-    
-    this.hideVisibleFurry = function(){
-        if(document.querySelector('.furry') !== null){
-        document.querySelector('.furry').classList.remove('furry');
-        };
-    };
-    this.hideVisibleCoin = function(){
-        if(document.querySelector('.coin') !== null){
-        document.querySelector('.coin').classList.remove('coin');
-        };
-    };
-    
-    this.turnFurry = function(event){
-        switch (event.which) {
-          case 37:
-            this.furry.direction = "left";
-            break;
-          case 38:
-            this.furry.direction = "up";
-            break;
-          case 39:
-            this.furry.direction = "right";
-            break;
-          case 40:
-            this.furry.direction = "down";
-            break;
-        };
-    };
-    
-    this.checkCoinCollision = function(){
-        if(this.furry.x === this.coin.x && this.furry.y === this.coin.y){
-            this.board[ this.index(this.coin.x, this.coin.y) ].classList.remove('coin');
-            this.score = this.score + 1;
-            var newScore = document.querySelector('strong')
-            newScore.innerText = this.score;
-            this.coin = new Coin();
-            this.showCoin();
-            var audio  = new Audio('./sounds/pig4.mp3');
-            audio.play();
-           
+                self.movePig()
+            }, initialSpeed - 25 * (self.score/speedThreshold))
         }
     };
     
-    this.gameOver = function(){
-        if(this.furry.x < 0 || this.furry.x > 9 || this.furry.y < 0 || this.furry.y > 9){
-            clearInterval(this.idSetInterval);
-            self.hideVisibleFurry();
-            self.hideVisibleCoin();
-            var over = document.querySelector('#over');
-            var pumba = document.querySelector('.end');
-            var restart = document.querySelector('button.playAgain')
-            restart.classList.remove('invisible');
-            over.classList.remove('invisible');
-            pumba.classList.remove('invisible');
-            over.style.fontFamily = "'Press Start 2P', cursive";
-            over.style.fontSize = '45px';
-            over.innerText = 'You have to do better! You caught only '+self.score+ ' bugs!';
-            over.style.padding = '30%';
-            document.removeEventListener('keydown' , self.onKeyDown);
-        } 
+    
+    this.movePig = function(){
+        this.hideVisiblePig();
+        // TODO: switch
+        if(this.pig.direction === 'right'){
+            this.pig.x = this.pig.x + 1;
+        } else if(this.pig.direction === 'left'){
+            this.pig.x = this.pig.x - 1;
+        } else if(this.pig.direction === 'up'){
+            this.pig.y = this.pig.y - 1;
+        } else if(this.pig.direction === 'down'){
+             this.pig.y = this.pig.y + 1;
+        };
+        self.showPig();
+        self.checkBugCollision();
+        self.gameOver();
+    };
+    
+    this.hideVisiblePig = function(){
+        if(document.querySelector('.pumba') !== null){
+        document.querySelector('.pumba').classList.remove('pumba');
+        };
+    };
+        
+    this.hideVisibleBug = function(){
+        if(document.querySelector('.bug') !== null){
+        document.querySelector('.bug').classList.remove('bug');
+        };
+    };
+        
+    this.turnPig = function(event){
+        switch (event.which) {
+          case 37:
+            this.pig.direction = "left";
+            break;
+          case 38:
+            this.pig.direction = "up";
+            break;
+          case 39:
+            this.pig.direction = "right";
+            break;
+          case 40:
+            this.pig.direction = "down";
+            break;
+        };
+    };
+          
+    function compareCoordinates(x1, y1, x2, y2) {
+        return (x1 === x2 && y1 === y2);
+    }
+
+    this.removeBug = function() {
+                    lastBugPosition.x = this.bug.x;
+            lastBugPosition.y = this.bug.y;
+            this.board[ this.index(this.bug.x, this.bug.y) ].classList.remove('bug');
+
     }
     
+    this.setNewBug = function() {
+                    do {
+               this.bug = new Bug();
+            } while(compareCoordinates(lastBugPosition.x, lastBugPosition.y, this.bug.x, this.bug.y));
+            this.showBug();
+    }
 
+    this.playBugCollisionSound = function() {
+                    let audio  = new Audio('./sounds/pig4.mp3');
+                    audio.play();
+    }
+
+    this.increaseScore = function() {
+        this.score += 1;
+    }
+    
+    this.displayScore = function() {
+        let newScore = document.querySelector('strong');
+            newScore.innerText = this.score;
+    }
+    
+    this.checkBugCollision = function(){
+        if(compareCoordinates(this.pig.x, this.pig.y, this.bug.x, this.bug.y)){
+            self.playBugCollisionSound();
+            
+            self.increaseScore();
+            self.displayScore();
+
+            self.removeBug();
+            self.setNewBug();
+
+            self.speedBoost();
+        }
+    };
+    
+    this.pigHitWall = function() {
+        return (self.pig.x < 0 || self.pig.x > boardSize-1 || self.pig.y < 0 || self.pig.y > boardSize-1);
+    }
+    
+    this.gameOver = function(){
+        if(self.pigHitWall()){
+            clearInterval(this.idSetInterval);
+            self.hideVisiblePig();
+            self.hideVisibleBug();
+            self.displayGameOverScreen();
+            document.addEventListener('keydown', function(event){
+        self.resetGame();
+    });
+        }
+    };
+
+    this.removeGameOverScreen = function() {
+                let over = document.querySelector('#over');
+        let pumba = document.querySelector('.end');
+        over.classList.add('invisible');
+        pumba.classList.add('invisible');
+    };
+    
+    this.resetScore = function() {
+        self.score = 0;
+    };
+    
+    this.resetGame = function() {
+        self.removeGameOverScreen();
+        self.resetScore();
+        lastBugPosition.x = 0;
+        lastBugPosition.y = 0;
+            this.bug = new Bug();
+    this.pig = new Pig();
+        self.showPig();
+        self.showBug();
+        self.startGame();
+    };
+    
+    this.displayGameOverScreen = function() {
+        let over = document.querySelector('#over');
+        let pumba = document.querySelector('.end');
+        over.classList.remove('invisible');
+        pumba.classList.remove('invisible');
+        over.style.fontFamily = "'Press Start 2P', cursive";
+        over.style.fontSize = '45px';
+        over.innerText = 'You have to do better! You caught only '+self.score+ ' bugs!';
+        over.style.padding = '30%';
+        document.removeEventListener('keydown' , self.onKeyDown);
+    }; 
 };
-
+    
 module.exports = Game;

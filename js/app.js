@@ -1,24 +1,18 @@
-//console.log('hello')
-//konstruktory furry i coin
+let Game = require('./game.js');
 
-var Game = require('./game.js')
-
-var button = document.querySelector('.start');
-button.addEventListener('click' || 'keydown', playMyGame);
+let button = document.querySelector('.start');
+button.addEventListener('click', playMyGame);
 
 function playMyGame() {
-    var starter = document.getElementById('start');
+    let starter = document.getElementById('start');
     starter.classList.add('invisible');
     
-    var game = new Game();
-    game.showFurry();
-    game.showCoin();
+    let game = new Game;
+    game.showPig();
+    game.showBug();
     game.startGame();
-    var audio = new Audio('./sounds/hakuna.mp3');
-            audio.play();
     
     document.addEventListener('keydown', function(event){
-        game.turnFurry(event);
-
+        game.turnPig(event);
     });
-}
+};

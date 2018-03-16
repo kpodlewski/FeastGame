@@ -7,7 +7,7 @@ body {
     padding: 0;
     height: 97vh;
     widows: 100vw;
-    background-image: url(../images/background.jpg);
+    background-image: url(../images/background.png);
 }
 
 section#score {
@@ -20,7 +20,7 @@ section#score {
   margin: 1em auto;
 }
 
-#board  > div {    
+#board  > div {
   border: 1px solid black;
   float: left;
   width: 64px;

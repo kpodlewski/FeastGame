@@ -134,8 +134,7 @@ button.start{
 }
 /*button.playAgain{
     position: absolute;
-    font-family: 'Press Start 2P', cursive;
-    z-index: 99;
+    font-family: 'Press Start 2P', cursive;             
     font-size: 45px;
     height: 60px;
     text-align: center;

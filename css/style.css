@@ -7,7 +7,7 @@ body {
     padding: 0;
     height: 97vh;
     widows: 100vw;
-    background-image: url(../images/background.png);
+    background-image: url(../images/background.jpg);
 }
 
 section#score {
@@ -20,7 +20,7 @@ section#score {
   margin: 1em auto;
 }
 
-#board  > div {
+#board  > div {    
   border: 1px solid black;
   float: left;
   width: 64px;
@@ -134,7 +134,8 @@ button.start{
 }
 /*button.playAgain{
     position: absolute;
-    font-family: 'Press Start 2P', cursive;             
+    font-family: 'Press Start 2P', cursive;
+    z-index: 99;
     font-size: 45px;
     height: 60px;
     text-align: center;

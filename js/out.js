@@ -160,15 +160,32 @@ function Game(board, pig, bug, score){
     this.movePig = function(){
         this.hideVisiblePig();
         // TODO: switch
-        if(this.pig.direction === 'right'){
-            this.pig.x = this.pig.x + 1;
-        } else if(this.pig.direction === 'left'){
-            this.pig.x = this.pig.x - 1;
-        } else if(this.pig.direction === 'up'){
-            this.pig.y = this.pig.y - 1;
-        } else if(this.pig.direction === 'down'){
-             this.pig.y = this.pig.y + 1;
-        };
+//        if(this.pig.direction === 'right'){
+//            this.pig.x = this.pig.x + 1;
+//        } else if(this.pig.direction === 'left'){
+//            this.pig.x = this.pig.x - 1;
+//        } else if(this.pig.direction === 'up'){
+//            this.pig.y = this.pig.y - 1;
+//        } else if(this.pig.direction === 'down'){
+//             this.pig.y = this.pig.y + 1;
+//        };
+//        
+        switch (this.pig.direction) {
+            case 'right':
+                this.pig.x = this.pig.x + 1;
+                break;
+            case 'left':
+                this.pig.x = this.pig.x - 1;
+                break;
+            case 'up':
+                this.pig.y = this.pig.y - 1;
+                break;
+            case 'down':
+                this.pig.y = this.pig.y + 1;
+                break;
+        }
+                
+                
         self.showPig();
         self.checkBugCollision();
         self.gameOver();
@@ -208,9 +225,9 @@ function Game(board, pig, bug, score){
     }
 
     this.removeBug = function() {
-                    lastBugPosition.x = this.bug.x;
-            lastBugPosition.y = this.bug.y;
-            this.board[ this.index(this.bug.x, this.bug.y) ].classList.remove('bug');
+        lastBugPosition.x = this.bug.x;
+        lastBugPosition.y = this.bug.y;
+        this.board[ this.index(this.bug.x, this.bug.y) ].classList.remove('bug');
 
     }
     
@@ -260,13 +277,13 @@ function Game(board, pig, bug, score){
             self.hideVisibleBug();
             self.displayGameOverScreen();
             document.addEventListener('keydown', function(event){
-        self.resetGame();
-    });
+                self.resetGame();
+            });
         }
     };
 
     this.removeGameOverScreen = function() {
-                let over = document.querySelector('#over');
+        let over = document.querySelector('#over');
         let pumba = document.querySelector('.end');
         over.classList.add('invisible');
         pumba.classList.add('invisible');
@@ -281,8 +298,8 @@ function Game(board, pig, bug, score){
         self.resetScore();
         lastBugPosition.x = 0;
         lastBugPosition.y = 0;
-            this.bug = new Bug();
-    this.pig = new Pig();
+        this.bug = new Bug();
+        this.pig = new Pig();
         self.showPig();
         self.showBug();
         self.startGame();

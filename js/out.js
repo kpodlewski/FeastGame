@@ -63,50 +63,26 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-let Game = __webpack_require__(2);
+let Game = __webpack_require__(1);
 
-let button = document.querySelector('.start');
-button.addEventListener('click', playMyGame);
+let game = new Game();
+game.initialMenu();
 
-function playMyGame() {
-    let starter = document.getElementById('start');
-    starter.classList.add('invisible');
-    
-    let game = new Game;
-    game.showPig();
-    game.showBug();
-    game.startGame();
-    
-    document.addEventListener('keydown', function(event){
-        game.turnPig(event);
-    });
-};
+
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
-
-function Bug(x,y){
-    this.x = Math.floor(Math.random() * 10);
-    this.y = Math.floor(Math.random() * 10);
-};
-
-module.exports = Bug;
-
-/***/ }),
-/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-let Pig = __webpack_require__(3);
-let Bug = __webpack_require__(1);
-
+let Pig = __webpack_require__(4);
+let Bug = __webpack_require__(3);
 
 function Game(board, pig, bug, score){
     // this.setInitialValues();
@@ -114,13 +90,15 @@ function Game(board, pig, bug, score){
     const initialSpeed = 250;
     const initialDirection = 'right';
     const boardSize = 10;
+    let play = true;
+    const self = this;
+
     
     let lastBugPosition = {
         x: 0,
         y: 0,
     }
     
-    const self = this;
     this.board = document.querySelectorAll('#board > div');
     this.bug = new Bug();
     this.pig = new Pig();
@@ -157,19 +135,7 @@ function Game(board, pig, bug, score){
     };
     
     
-    this.movePig = function(){
-        this.hideVisiblePig();
-        // TODO: switch
-//        if(this.pig.direction === 'right'){
-//            this.pig.x = this.pig.x + 1;
-//        } else if(this.pig.direction === 'left'){
-//            this.pig.x = this.pig.x - 1;
-//        } else if(this.pig.direction === 'up'){
-//            this.pig.y = this.pig.y - 1;
-//        } else if(this.pig.direction === 'down'){
-//             this.pig.y = this.pig.y + 1;
-//        };
-//        
+    this.movePig = function(){        
         switch (this.pig.direction) {
             case 'right':
                 this.pig.x = this.pig.x + 1;
@@ -184,11 +150,14 @@ function Game(board, pig, bug, score){
                 this.pig.y = this.pig.y + 1;
                 break;
         }
-                
-                
-        self.showPig();
-        self.checkBugCollision();
-        self.gameOver();
+        if(self.pigHitWall()){ self.gameOver(); }
+        else {
+//        if(self.play === true){
+            this.hideVisiblePig();
+            self.showPig();
+            self.checkBugCollision();
+        }
+//        }
     };
     
     this.hideVisiblePig = function(){
@@ -267,61 +236,106 @@ function Game(board, pig, bug, score){
     };
     
     this.pigHitWall = function() {
+            console.log(self.pig.x);
+        console.log(self.pig.y);
+        console.log((self.pig.x < 0 || self.pig.x > boardSize-1 || self.pig.y < 0 || self.pig.y > boardSize-1))
         return (self.pig.x < 0 || self.pig.x > boardSize-1 || self.pig.y < 0 || self.pig.y > boardSize-1);
     }
     
     this.gameOver = function(){
-        if(self.pigHitWall()){
             clearInterval(this.idSetInterval);
             self.hideVisiblePig();
             self.hideVisibleBug();
+            self.play = false;
             self.displayGameOverScreen();
-            document.addEventListener('keydown', function(event){
-                self.resetGame();
-            });
-        }
+            self.restart();
     };
+    
+    this.restart = function(){
+        let replay = document.querySelector('#playAgain');
+        replay.addEventListener('click', function(){
+            self.removeGameOverScreen();
+            self.showMenu();
+            self.pig.x = 0;
+            self.pig.y = 0;
+            self.resetScore();
+            let newScore = document.querySelector('strong');
+            newScore.innerText = self.score;            
+            self.play = true;
+
+        })
+
+    }
+    this.showMenu =function() {
+        document.querySelector('#start').style.display='block';
+        document.querySelector('.start').style.display='inline-block';
+    }
 
     this.removeGameOverScreen = function() {
         let over = document.querySelector('#over');
         let pumba = document.querySelector('.end');
+        let playAgain = document.querySelector('#playAgain');
         over.classList.add('invisible');
         pumba.classList.add('invisible');
+        playAgain.classList.add('invisible');
     };
     
     this.resetScore = function() {
         self.score = 0;
     };
     
-    this.resetGame = function() {
-        self.removeGameOverScreen();
-        self.resetScore();
-        lastBugPosition.x = 0;
-        lastBugPosition.y = 0;
-        this.bug = new Bug();
-        this.pig = new Pig();
-        self.showPig();
-        self.showBug();
-        self.startGame();
-    };
     
     this.displayGameOverScreen = function() {
         let over = document.querySelector('#over');
+        let overTxt = document.querySelector('.overTxt');
         let pumba = document.querySelector('.end');
+        let playAgain = document.querySelector('#playAgain');
         over.classList.remove('invisible');
         pumba.classList.remove('invisible');
-        over.style.fontFamily = "'Press Start 2P', cursive";
-        over.style.fontSize = '45px';
-        over.innerText = 'You have to do better! You caught only '+self.score+ ' bugs!';
-        over.style.padding = '30%';
+        playAgain.classList.remove('invisible');
+        overTxt.innerText = 'You have to do better! You caught only '+self.score+ ' bugs!';
         document.removeEventListener('keydown' , self.onKeyDown);
     }; 
+    
+   this.initialMenu = function(){
+       let starter = document.querySelector('.start');
+       starter.addEventListener('click', function(){
+           document.querySelector('#start').style.display='none';
+           starter.style.display='none';
+           self.showPig();
+           self.showBug();
+           self.startGame();
+           
+           document.addEventListener('keydown', function(event){
+               self.turnPig(event);
+           })
+       
+        }
+    )}
 };
     
 module.exports = Game;
 
 /***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(0);
+
+
+/***/ }),
 /* 3 */
+/***/ (function(module, exports) {
+
+function Bug(x,y){
+    this.x = Math.floor(Math.random() * 10);
+    this.y = Math.floor(Math.random() * 10);
+};
+
+module.exports = Bug;
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports) {
 
 function Pig(x, y, direction){
@@ -330,13 +344,6 @@ function Pig(x, y, direction){
 };
 
 module.exports = Pig;
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(0);
-
 
 /***/ })
 /******/ ]);

@@ -43,9 +43,6 @@ section#score div {
   font-size: 22px;
 }
 
-
-
-
 .pumba {
   background-image: url('../images/pumbaicon.png');
   background-repeat: no-repeat;
@@ -119,7 +116,11 @@ button.start{
 #over{
     background: rgba(255, 255, 255, .8);
     text-align: center;
-
+    font-family: 'Press Start 2P', cursive;
+    font-size: 45px;
+}
+.overTxt{
+    margin: 20%;
 }
 .end{
     background-image: url(../images/loose.png);
@@ -132,16 +133,17 @@ button.start{
     top: 5%;
     left:45%;
 }
-/*button.playAgain{
+#playAgain{
     position: absolute;
     font-family: 'Press Start 2P', cursive;
-    z-index: 99;
     font-size: 45px;
     height: 60px;
+    z-index: 2;
     text-align: center;
     margin-top: -15vh;
     margin-left: 38vw;
     border-radius: 15px;
     padding-left: 9px;
-    padding-top: 6px;*/
+    padding-top: 6px;               
+
 }

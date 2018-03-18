@@ -1,4 +1,4 @@
-function Pig(x, y, direction){
+function Pig(x, y){
     this.x = 0;
     this.y = 0;
 };

@@ -1,4 +1,4 @@
-function Bug(x,y){
+function Bug(x, y){
     this.x = Math.floor(Math.random() * 10);
     this.y = Math.floor(Math.random() * 10);
 };
